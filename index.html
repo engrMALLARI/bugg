@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Error</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: black;
+            color: red;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+        .error-msg {
+            font-size: 24px;
+        }
+        .hidden {
+            display: none;
+        }
+        .retry-button {
+            background: red;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .valentine-container {
+            display: none;
+            background: pink;
+            color: black;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            position: relative;
+        }
+        .valentine-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .choice-button {
+            margin: 10px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .yes-button {
+            background: green;
+            color: white;
+        }
+        .no-button {
+            background: gray;
+            color: white;
+        }
+        .heart {
+            position: absolute;
+            color: red;
+            font-size: 20px;
+            opacity: 1;
+            animation: floatUp 3s ease-in-out forwards;
+        }
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="error-msg" id="errorMessage">System Error Detected. Please Retry.
+        <br>
+        <button class="retry-button" onclick="fakeRetry()">Retry</button>
+    </div>
+    <div class="valentine-container" id="valentineMessage">
+        <div class="valentine-box">
+            <h1>Surprise! 💖</h1>
+            <p>Will you be my Valentine? 💕</p>
+            <button class="choice-button yes-button" id="yesButton">Yes</button>
+            <button class="choice-button no-button" id="noButton">No</button>
+        </div>
+    </div>
+    <audio id="valentineSong" src="falling-in-love.mp3"></audio>
+    <script>
+        function fakeRetry() {
+            document.getElementById("errorMessage").innerText = "SHUTTING DOWN...";
+            setTimeout(() => {
+                document.body.style.background = "pink";
+                document.getElementById("errorMessage").classList.add("hidden");
+                document.getElementById("valentineMessage").style.display = "flex";
+            }, 2000);
+        }
+
+        document.getElementById("yesButton").addEventListener("click", function() {
+            document.getElementById("valentineSong").play();
+            setInterval(createFloatingHeart, 500);
+            setTimeout(() => {
+                alert("Yay! Happy Valentine's Day! ❤️");
+            }, 500);
+        });
+
+        document.getElementById("noButton").addEventListener("click", function() {
+            if (confirm("Are you really sure? 🥺")) {
+                window.close();
+            }
+        });
+
+        function createFloatingHeart() {
+            let heart = document.createElement("div");
+            heart.classList.add("heart");
+            heart.innerHTML = "❤️";
+            heart.style.left = Math.random() * window.innerWidth + "px";
+            heart.style.top = Math.random() * window.innerHeight + "px";
+            heart.style.fontSize = Math.random() * 30 + 10 + "px";
+            document.body.appendChild(heart);
+            setTimeout(() => { heart.remove(); }, 3000);
+        }
+    </script>
+</body>
+</html>
